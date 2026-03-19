@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amistades Best Buddies · Querétaro</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;900&family=Fraunces:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --purple: #6B2FA0;
+    --purple-light: #9B59D1;
+    --teal: #00A693;
+    --teal-light: #2DC5B2;
+    --orange: #F4871E;
+    --orange-light: #FFB057;
+    --pink: #E0429A;
+    --white: #FFFFFF;
+    --off-white: #F9F7FF;
+    --dark: #1A0A2E;
+    --gray: #6B6880;
+    --light-gray: #EDE8F7;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Nunito', sans-serif; background: var(--off-white); color: var(--dark); overflow-x: hidden; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(255,255,255,0.92); backdrop-filter: blur(12px);
+    border-bottom: 1.5px solid rgba(107,47,160,0.1);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0.75rem 2rem;
+  }
+  .nav-logo { display: flex; align-items: center; gap: 10px; font-weight: 900; font-size: 1rem; color: var(--purple); letter-spacing: -0.3px; }
+  .nav-logo-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--orange); }
+  .nav-links { display: flex; gap: 1.5rem; list-style: none; }
+  .nav-links a { text-decoration: none; color: var(--gray); font-size: 0.875rem; font-weight: 600; transition: color .2s; }
+  .nav-links a:hover { color: var(--purple); }
+  .nav-cta { background: var(--purple); color: white; border: none; border-radius: 50px; padding: 0.5rem 1.25rem; font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 0.875rem; cursor: pointer; transition: background .2s, transform .15s; }
+  .nav-cta:hover { background: var(--purple-light); transform: scale(1.03); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh; padding-top: 80px;
+    background: linear-gradient(135deg, #2D0A5A 0%, #6B2FA0 50%, #00A693 100%);
+    display: flex; align-items: center; justify-content: center;
+    text-align: center; position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 70% 30%, rgba(244,135,30,0.25) 0%, transparent 60%),
+                radial-gradient(ellipse at 20% 80%, rgba(224,66,154,0.2) 0%, transparent 50%);
+  }
+  .hero-blobs { position: absolute; inset: 0; pointer-events: none; }
+  .blob { position: absolute; border-radius: 50%; filter: blur(60px); opacity: 0.35; animation: float 6s ease-in-out infinite; }
+  .blob-1 { width: 300px; height: 300px; background: var(--orange); top: 10%; left: -5%; animation-delay: 0s; }
+  .blob-2 { width: 200px; height: 200px; background: var(--pink); bottom: 15%; right: 5%; animation-delay: 2s; }
+  .blob-3 { width: 150px; height: 150px; background: var(--teal); top: 60%; left: 60%; animation-delay: 4s; }
+  @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
+
+  .hero-content { position: relative; z-index: 1; max-width: 760px; padding: 2rem; }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 50px; padding: 0.4rem 1rem; color: white; font-size: 0.8rem; font-weight: 700;
+    margin-bottom: 1.5rem; backdrop-filter: blur(8px);
+    animation: fadeDown 0.6s ease both;
+  }
+  .hero-badge-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--orange-light); }
+  .hero-title {
+    font-family: 'Fraunces', serif; font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 700;
+    color: white; line-height: 1.1; margin-bottom: 0.5rem;
+    animation: fadeDown 0.7s ease 0.1s both;
+  }
+  .hero-title em { font-style: italic; color: var(--orange-light); }
+  .hero-subtitle {
+    font-size: 1.1rem; color: rgba(255,255,255,0.8); max-width: 520px; margin: 1rem auto 2rem;
+    line-height: 1.65; animation: fadeDown 0.7s ease 0.2s both;
+  }
+  .hero-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; animation: fadeDown 0.7s ease 0.3s both; }
+  .btn-primary {
+    background: var(--orange); color: white; border: none; border-radius: 50px;
+    padding: 0.85rem 2rem; font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 1rem;
+    cursor: pointer; transition: all .2s; box-shadow: 0 6px 20px rgba(244,135,30,0.4);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(244,135,30,0.5); }
+  .btn-secondary {
+    background: rgba(255,255,255,0.15); color: white; border: 1.5px solid rgba(255,255,255,0.4);
+    border-radius: 50px; padding: 0.85rem 2rem; font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 1rem;
+    cursor: pointer; transition: all .2s; backdrop-filter: blur(8px);
+    text-decoration: none; display: inline-block;
+  }
+  .btn-secondary:hover { background: rgba(255,255,255,0.25); }
+  .hero-stats {
+    display: flex; gap: 2.5rem; justify-content: center; margin-top: 3rem;
+    animation: fadeDown 0.7s ease 0.4s both;
+  }
+  .stat-item { color: white; }
+  .stat-num { font-family: 'Fraunces', serif; font-size: 2.2rem; font-weight: 700; line-height: 1; color: var(--orange-light); }
+  .stat-lbl { font-size: 0.78rem; color: rgba(255,255,255,0.7); font-weight: 600; margin-top: 2px; }
+
+  @keyframes fadeDown { from { opacity: 0; transform: translateY(-16px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* SECTIONS */
+  section { padding: 5rem 2rem; }
+  .container { max-width: 960px; margin: 0 auto; }
+  .section-tag { display: inline-block; background: var(--light-gray); color: var(--purple); font-size: 0.75rem; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; border-radius: 50px; padding: 0.3rem 0.9rem; margin-bottom: 0.75rem; }
+  .section-title { font-family: 'Fraunces', serif; font-size: clamp(1.75rem, 4vw, 2.5rem); font-weight: 700; line-height: 1.2; margin-bottom: 1rem; }
+  .section-desc { color: var(--gray); font-size: 1rem; line-height: 1.7; max-width: 560px; }
+
+  /* INFO CARDS */
+  .info-strip {
+    background: white; border-radius: 20px; padding: 1.5rem 2rem;
+    display: flex; flex-wrap: wrap; gap: 2rem; align-items: center; justify-content: space-around;
+    box-shadow: 0 4px 24px rgba(107,47,160,0.08); margin-bottom: 4rem;
+    border: 1.5px solid rgba(107,47,160,0.08);
+  }
+  .info-item { text-align: center; }
+  .info-item .ilabel { font-size: 0.75rem; color: var(--gray); font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
+  .info-item .ivalue { font-size: 1.3rem; font-weight: 900; color: var(--purple); margin-top: 2px; }
+  .info-item .ivalue.teal { color: var(--teal); }
+  .info-item .ivalue.orange { color: var(--orange); }
+
+  /* OBJETIVO */
+  .objetivo-section { background: white; }
+  .objetivo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
+  .objetivo-visual {
+    background: linear-gradient(135deg, var(--purple) 0%, var(--teal) 100%);
+    border-radius: 24px; padding: 2.5rem; color: white; position: relative; overflow: hidden;
+  }
+  .objetivo-visual::before {
+    content: ''; position: absolute; top: -40px; right: -40px;
+    width: 160px; height: 160px; border-radius: 50%;
+    background: rgba(255,255,255,0.08);
+  }
+  .objetivo-visual p { font-size: 1.15rem; line-height: 1.7; position: relative; }
+  .objetivo-visual .quote-mark { font-family: 'Fraunces', serif; font-size: 5rem; line-height: 0.5; color: rgba(255,255,255,0.2); display: block; margin-bottom: 1rem; }
+
+  /* ACTIVIDADES */
+  .actividades-section { background: var(--off-white); }
+  .actividades-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.25rem; margin-top: 2.5rem; }
+  .actividad-card {
+    background: white; border-radius: 16px; padding: 1.5rem;
+    border: 1.5px solid rgba(107,47,160,0.07);
+    transition: transform .2s, box-shadow .2s;
+    cursor: default;
+  }
+  .actividad-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(107,47,160,0.12); }
+  .actividad-num { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 0.9rem; color: white; margin-bottom: 0.75rem; }
+  .actividad-card h3 { font-size: 0.95rem; font-weight: 800; color: var(--dark); margin-bottom: 0.4rem; }
+  .actividad-card p { font-size: 0.85rem; color: var(--gray); line-height: 1.55; }
+
+  /* CALENDARIO */
+  .calendario-section { background: white; }
+  .cal-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 2.5rem; }
+  .cal-col h3 { font-weight: 800; font-size: 1rem; margin-bottom: 1rem; display: flex; align-items: center; gap: 8px; }
+  .cal-events { display: flex; flex-direction: column; gap: 0.75rem; }
+  .cal-event {
+    display: flex; gap: 1rem; align-items: flex-start;
+    background: var(--off-white); border-radius: 12px; padding: 0.9rem 1rem;
+    border-left: 4px solid var(--purple); transition: background .2s;
+  }
+  .cal-event.teal { border-left-color: var(--teal); }
+  .cal-event:hover { background: var(--light-gray); }
+  .cal-date { font-size: 0.75rem; font-weight: 900; color: var(--purple); min-width: 70px; padding-top: 2px; }
+  .cal-event.teal .cal-date { color: var(--teal); }
+  .cal-event-info h4 { font-size: 0.9rem; font-weight: 800; margin-bottom: 2px; }
+  .cal-event-info p { font-size: 0.8rem; color: var(--gray); }
+
+  /* PERFILES */
+  .perfil-section { background: linear-gradient(135deg, #F0EBFF 0%, #E6FBF8 100%); }
+  .perfil-list { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1.5rem; }
+  .perfil-tag {
+    display: flex; align-items: center; gap: 6px;
+    background: white; border-radius: 50px; padding: 0.5rem 1rem;
+    font-size: 0.875rem; font-weight: 700; color: var(--purple);
+    border: 1.5px solid rgba(107,47,160,0.15);
+    transition: all .2s;
+  }
+  .perfil-tag:hover { background: var(--purple); color: white; transform: scale(1.04); }
+  .perfil-tag span { font-size: 1rem; }
+  .aviso-box {
+    background: white; border-radius: 16px; padding: 1.5rem 2rem;
+    margin-top: 2rem; border-left: 5px solid var(--orange);
+  }
+  .aviso-box p { font-size: 0.9rem; line-height: 1.65; color: var(--dark); }
+  .aviso-box strong { color: var(--orange); }
+
+  /* CONTACTO */
+  .contacto-section { background: white; }
+  .contacto-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; margin-top: 2.5rem; }
+  .contact-card {
+    background: var(--off-white); border-radius: 16px; padding: 1.5rem;
+    display: flex; align-items: center; gap: 1rem;
+    border: 1.5px solid rgba(107,47,160,0.08);
+    margin-bottom: 1rem; transition: all .2s;
+  }
+  .contact-card:hover { border-color: var(--purple); transform: translateX(4px); }
+  .contact-icon { width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; flex-shrink: 0; }
+  .contact-card h4 { font-size: 0.75rem; color: var(--gray); font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; }
+  .contact-card p { font-size: 0.95rem; font-weight: 700; color: var(--dark); word-break: break-all; }
+  .map-placeholder {
+    background: linear-gradient(135deg, var(--purple) 0%, var(--teal) 100%);
+    border-radius: 20px; padding: 2rem; color: white; text-align: center;
+    min-height: 220px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem;
+  }
+  .map-placeholder .map-icon { font-size: 3rem; }
+  .map-placeholder h3 { font-family: 'Fraunces', serif; font-size: 1.1rem; font-weight: 700; }
+  .map-placeholder p { font-size: 0.85rem; opacity: 0.85; line-height: 1.5; }
+  .map-btn {
+    background: white; color: var(--purple); border: none; border-radius: 50px;
+    padding: 0.6rem 1.4rem; font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 0.85rem;
+    cursor: pointer; transition: all .2s; text-decoration: none; display: inline-block; margin-top: 0.5rem;
+  }
+  .map-btn:hover { transform: scale(1.05); }
+
+  /* FOOTER */
+  footer {
+    background: var(--dark); color: rgba(255,255,255,0.6);
+    text-align: center; padding: 2.5rem;
+    font-size: 0.875rem;
+  }
+  footer a { color: var(--teal-light); text-decoration: none; }
+  footer .footer-logo { font-family: 'Fraunces', serif; font-size: 1.4rem; color: white; margin-bottom: 0.5rem; }
+
+  /* HORARIOS */
+  .horarios-box {
+    background: linear-gradient(135deg, #EDF0FF, #E6FBF8);
+    border-radius: 20px; padding: 2rem; margin-top: 2rem;
+    border: 1.5px solid rgba(107,47,160,0.1);
+  }
+  .horarios-box p { font-size: 0.9rem; line-height: 1.7; color: var(--dark); }
+  .horarios-box .highlight { font-weight: 800; color: var(--purple); }
+
+  /* SCROLL ANIMATION */
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 680px) {
+    .objetivo-grid, .cal-grid, .contacto-grid { grid-template-columns: 1fr; }
+    .hero-stats { gap: 1.5rem; }
+    nav { padding: 0.75rem 1rem; }
+    .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <span class="nav-logo-dot"></span>
+    Best Buddies Qro
+  </div>
+  <ul class="nav-links">
+    <li><a href="#objetivo">Objetivo</a></li>
+    <li><a href="#actividades">Actividades</a></li>
+    <li><a href="#calendario">Calendario</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </ul>
+  <button class="nav-cta" onclick="document.getElementById('contacto').scrollIntoView({behavior:'smooth'})">¡Quiero unirme!</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-blobs">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+  </div>
+  <div class="hero-content">
+    <div class="hero-badge"><span class="hero-badge-dot"></span> Servicio Social · Proyecto Presencial</div>
+    <h1 class="hero-title">Amistades<br><em>Best Buddies</em></h1>
+    <p class="hero-subtitle">Mejora la calidad de vida de jóvenes y adultos con discapacidad intelectual a través de la amistad uno a uno durante un semestre.</p>
+    <div class="hero-buttons">
+      <button class="btn-primary" onclick="document.getElementById('actividades').scrollIntoView({behavior:'smooth'})">Ver actividades</button>
+      <a class="btn-secondary" href="https://www.bestbuddies.org.mx" target="_blank">Sitio oficial</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item"><div class="stat-num">180</div><div class="stat-lbl">Horas a acreditar</div></div>
+      <div class="stat-item"><div class="stat-num">15</div><div class="stat-lbl">Vacantes disponibles</div></div>
+      <div class="stat-item"><div class="stat-num">15</div><div class="stat-lbl">Semanas de experiencia</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- INFO STRIP -->
+<div style="background: white; padding: 1.5rem 2rem; border-bottom: 1.5px solid #EDE8F7;">
+  <div class="container">
+    <div class="info-strip">
+      <div class="info-item"><div class="ilabel">Clave</div><div class="ivalue">WA1058</div></div>
+      <div class="info-item"><div class="ilabel">CRN</div><div class="ivalue teal">26167</div></div>
+      <div class="info-item"><div class="ilabel">Grupo</div><div class="ivalue orange">607</div></div>
+      <div class="info-item"><div class="ilabel">Período</div><div class="ivalue">Feb 9 – Jun 14</div></div>
+      <div class="info-item"><div class="ilabel">Modalidad</div><div class="ivalue teal">Presencial</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- OBJETIVO -->
+<section class="objetivo-section" id="objetivo">
+  <div class="container">
+    <div class="objetivo-grid reveal">
+      <div>
+        <span class="section-tag">¿De qué se trata?</span>
+        <h2 class="section-title">Conecta. Acompaña.<br>Transforma.</h2>
+        <p class="section-desc">Best Buddies México A.C. es un programa internacional que une a estudiantes universitarios con personas con discapacidad intelectual (PCDI) en una amistad genuina y significativa.</p>
+        <p class="section-desc" style="margin-top: 1rem;">Cada participante forma una pareja única y se compromete durante un semestre a compartir experiencias, salidas y aprendizajes mutuos.</p>
+      </div>
+      <div class="objetivo-visual">
+        <span class="quote-mark">"</span>
+        <p>Mejorar la calidad de vida de jóvenes y adultos con discapacidad intelectual a través de la amistad uno a uno durante un semestre.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ACTIVIDADES -->
+<section class="actividades-section" id="actividades">
+  <div class="container reveal">
+    <span class="section-tag">Lo que harás</span>
+    <h2 class="section-title">Actividades del programa</h2>
+    <div class="actividades-grid">
+      <div class="actividad-card">
+        <div class="actividad-num" style="background: var(--purple);">1</div>
+        <h3>Curso de Sensibilización</h3>
+        <p>Formación inicial para entender y conectar mejor con tu buddy desde el primer día.</p>
+      </div>
+      <div class="actividad-card">
+        <div class="actividad-num" style="background: var(--teal);">2</div>
+        <h3>Presentación de Parejas</h3>
+        <p>El momento especial donde conoces a tu buddy y comienza la amistad.</p>
+      </div>
+      <div class="actividad-card">
+        <div class="actividad-num" style="background: var(--orange);">3</div>
+        <h3>Salidas Presenciales</h3>
+        <p>Encuentros quincenales con tu buddy para vivir experiencias juntos con temas guiados.</p>
+      </div>
+      <div class="actividad-card">
+        <div class="actividad-num" style="background: var(--pink);">4</div>
+        <h3>Salidas Grupales</h3>
+        <p>Dos eventos donde todos los equipos se reúnen para compartir en comunidad.</p>
+      </div>
+      <div class="actividad-card">
+        <div class="actividad-num" style="background: var(--purple-light);">5</div>
+        <h3>Taller de Reflexión</h3>
+        <p>Cierre del capítulo para integrar aprendizajes y celebrar la experiencia vivida.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CALENDARIO -->
+<section class="calendario-section" id="calendario">
+  <div class="container reveal">
+    <span class="section-tag">Fechas importantes</span>
+    <h2 class="section-title">Calendario del semestre</h2>
+    <div class="cal-grid">
+      <div class="cal-col">
+        <h3 style="color: var(--purple);">📌 Salidas quincenales (por equipo)</h3>
+        <div class="cal-events">
+          <div class="cal-event">
+            <div class="cal-date">20–22 Feb</div>
+            <div class="cal-event-info">
+              <h4>All About Me</h4>
+              <p>Justicia Social 🌍</p>
+            </div>
+          </div>
+          <div class="cal-event">
+            <div class="cal-date">6–8 Mar</div>
+            <div class="cal-event-info">
+              <h4>Inclusión y Respeto</h4>
+              <p>Día de la Mujer · Día Síndrome de Down 💜</p>
+            </div>
+          </div>
+          <div class="cal-event">
+            <div class="cal-date">10–12 Abr</div>
+            <div class="cal-event-info">
+              <h4>Cuidado del Planeta</h4>
+              <p>Día de la Tierra 🌎</p>
+            </div>
+          </div>
+          <div class="cal-event">
+            <div class="cal-date">8–10 May</div>
+            <div class="cal-event-info">
+              <h4>Gratitud y Familia</h4>
+              <p>Día de las Madres 💐</p>
+            </div>
+          </div>
+          <div class="cal-event">
+            <div class="cal-date">5–7 Jun</div>
+            <div class="cal-event-info">
+              <h4>Amistad y Trabajo en Equipo</h4>
+              <p>Cierre de semestre 🤝</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="cal-col">
+        <h3 style="color: var(--teal);">🎉 Salidas grupales (todos juntos)</h3>
+        <div class="cal-events">
+          <div class="cal-event teal">
+            <div class="cal-date">Dom 26 Abr</div>
+            <div class="cal-event-info">
+              <h4>Salida grupal 1</h4>
+              <p>¡Toda la comunidad Best Buddies reunida! 🥳</p>
+            </div>
+          </div>
+          <div class="cal-event teal">
+            <div class="cal-date">Dom 24 May</div>
+            <div class="cal-event-info">
+              <h4>Salida grupal 2</h4>
+              <p>Segunda celebración comunitaria 🎉</p>
+            </div>
+          </div>
+        </div>
+        <div class="horarios-box" style="margin-top: 1.5rem;">
+          <p><span class="highlight">Flexibilidad de horarios:</span> Las actividades con tu buddy se coordinan de acuerdo a la disponibilidad de ambas partes.</p>
+          <p style="margin-top: 0.75rem;"><span class="highlight">Obligatorio:</span> Sesión inicial y sesión con el buddy para comenzar actividades.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PERFIL -->
+<section class="perfil-section" id="perfil">
+  <div class="container reveal">
+    <span class="section-tag">¿Eres tú?</span>
+    <h2 class="section-title">Perfil del voluntario ideal</h2>
+    <p class="section-desc">Buscamos estudiantes que realmente quieran vivir esta experiencia y comprometerse.</p>
+    <div class="perfil-list">
+      <div class="perfil-tag"><span>💛</span> Empático</div>
+      <div class="perfil-tag"><span>📋</span> Organizado</div>
+      <div class="perfil-tag"><span>🤝</span> Comprometido</div>
+      <div class="perfil-tag"><span>👂</span> Escucha activa</div>
+      <div class="perfil-tag"><span>💬</span> Comunicación asertiva</div>
+      <div class="perfil-tag"><span>😌</span> Paciente</div>
+      <div class="perfil-tag"><span>⚡</span> Proactivo</div>
+      <div class="perfil-tag"><span>🌟</span> Con entusiasmo</div>
+      <div class="perfil-tag"><span>🕊️</span> Tolerante</div>
+    </div>
+    <div class="aviso-box">
+      <p>⚠️ <strong>Importante antes de inscribirte:</strong> Este programa tiene cupo limitado y alta demanda. Solo inscríbete si estás 100% seguro/a de participar activamente. Los buddies (PCDI) esperan con emoción tu amistad — no presentarte les afecta directamente.</p>
+      <p style="margin-top: 0.75rem;">✅ Si eliges Best Buddies, hazlo con compromiso, tiempo y ganas de formar parte.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACTO -->
+<section class="contacto-section" id="contacto">
+  <div class="container reveal">
+    <span class="section-tag">Encuéntranos</span>
+    <h2 class="section-title">Contacto y ubicación</h2>
+    <div class="contacto-grid">
+      <div>
+        <div class="contact-card">
+          <div class="contact-icon" style="background: #EDE8F7;">👩‍💼</div>
+          <div><h4>Encargada</h4><p>Karla Guerrero Solórzano</p></div>
+        </div>
+        <div class="contact-card">
+          <div class="contact-icon" style="background: #E6FBF8;">✉️</div>
+          <div><h4>Correo</h4><p>coord.qro@bestbuddies.org.mx</p></div>
+        </div>
+        <div class="contact-card">
+          <div class="contact-icon" style="background: #FFF3E8;">📞</div>
+          <div><h4>Teléfono</h4><p>442 359 2175</p></div>
+        </div>
+        <div class="contact-card" style="cursor: pointer;" onclick="window.open('https://www.bestbuddies.org.mx','_blank')">
+          <div class="contact-icon" style="background: #EDE8F7;">🌐</div>
+          <div><h4>Sitio web</h4><p>www.bestbuddies.org.mx</p></div>
+        </div>
+      </div>
+      <div>
+        <div class="map-placeholder">
+          <div class="map-icon">📍</div>
+          <h3>Best Buddies Querétaro</h3>
+          <p>Blv. Universitario 399<br>Plaza Palmas II, Piso 2, Oficina 3<br>Juriquilla, Querétaro</p>
+          <a class="map-btn" href="https://maps.google.com/?q=Blvd+Universitario+399+Juriquilla+Queretaro" target="_blank">Ver en Google Maps</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Best Buddies México</div>
+  <p>Programa <strong>Amistades</strong> · Capítulo Querétaro · Semestre Feb–Jun 2025</p>
+  <p style="margin-top: 0.5rem;">
+    <a href="https://www.bestbuddies.org.mx" target="_blank">bestbuddies.org.mx</a> ·
+    <a href="mailto:coord.qro@bestbuddies.org.mx">coord.qro@bestbuddies.org.mx</a>
+  </p>
+</footer>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+  }, { threshold: 0.12 });
+  reveals.forEach(r => observer.observe(r));
+</script>
+</body>
+</html>
